@@ -1,5 +1,5 @@
 document.querySelectorAll('.card[data-popup]').forEach(card => {
-    card.addEventListener('click', () => {
+    card.addEventListener('click', (event) => {
         const popupId = card.getAttribute('data-popup');
         const popup = document.getElementById(popupId);
         console.log('Opening popup:', popupId);
@@ -9,22 +9,56 @@ document.querySelectorAll('.card[data-popup]').forEach(card => {
             return;
         }
 
-        // Get parent window's scroll position and viewport height
-        const parentWindow = window.parent;
-        const parentScroll = parentWindow.scrollY || 0;
-        const parentViewportHeight = parentWindow.innerHeight || window.innerHeight;
+        // Get cursor position
+        const x = event.clientX;
+        const y = event.clientY;
         
-        // Calculate the position relative to parent window's viewport
-        const cardRect = card.getBoundingClientRect();
-        const iframeRect = window.frameElement ? window.frameElement.getBoundingClientRect() : { top: 0 };
-        const cardPositionInParent = cardRect.top + iframeRect.top;
-        
-        // Position popup content relative to the clicked card
+        // Position popup content at cursor
         const popupContent = popup.querySelector('.popup-content');
         if (popupContent) {
-            const offset = Math.max(0, (cardPositionInParent - parentViewportHeight / 4));
-            popupContent.style.marginTop = `-${offset}px`;
-            console.log('Setting popup margin-top:', -offset);
+            // Make the popup visible but not displayed to measure its dimensions
+            popup.style.visibility = 'hidden';
+            popup.classList.add('active');
+            
+            // Get popup dimensions
+            const popupRect = popupContent.getBoundingClientRect();
+            const viewportWidth = window.innerWidth;
+            const viewportHeight = window.innerHeight;
+            
+            // Calculate positions
+            let finalX = x;
+            let finalY = y;
+            let transform = 'translate(-50%, -50%)';
+            
+            // Check horizontal boundaries
+            if (x + (popupRect.width / 2) > viewportWidth) {
+                // Too far right
+                finalX = viewportWidth - 20;
+                transform = 'translate(-100%, -50%)';
+            } else if (x - (popupRect.width / 2) < 0) {
+                // Too far left
+                finalX = 20;
+                transform = 'translate(0, -50%)';
+            }
+            
+            // Check vertical boundaries
+            if (y + (popupRect.height / 2) > viewportHeight) {
+                // Too far down
+                finalY = viewportHeight - 20;
+                transform = transform.replace('-50%)', '-100%)');
+            } else if (y - (popupRect.height / 2) < 0) {
+                // Too far up
+                finalY = 20;
+                transform = transform.replace('-50%)', '0)');
+            }
+            
+            // Apply final position
+            popupContent.style.left = finalX + 'px';
+            popupContent.style.top = finalY + 'px';
+            popupContent.style.transform = transform;
+            
+            // Make popup visible again
+            popup.style.visibility = 'visible';
         }
         
         // Force popup to be visible
@@ -34,7 +68,7 @@ document.querySelectorAll('.card[data-popup]').forEach(card => {
         popup.classList.add('active');
         document.body.style.overflow = 'hidden';
         
-        console.log('Popup activated');
+        console.log('Popup activated at:', x, y);
     });
 });
 

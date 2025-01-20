@@ -171,18 +171,15 @@ h3.title.overflow {
     height: 100vh;
     background: rgba(0, 0, 0, 0.8);
     display: none;
-    justify-content: center;
-    align-items: flex-start;
     z-index: 99999;
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.3s ease, visibility 0.3s ease;
-    padding: 2rem 0;
-    overflow-y: auto;
+    overflow: hidden;
 }
 
 .popup.active {
-    display: flex !important;
+    display: block !important;
     opacity: 1 !important;
     visibility: visible !important;
 }
@@ -194,15 +191,10 @@ h3.title.overflow {
     padding: 2rem;
     width: min(90vw, 800px);
     max-height: 80vh;
-    position: relative;
+    position: absolute;
     overflow-y: auto;
-    transform: translateY(20px);
     transition: transform 0.3s ease;
-    margin-top: 2rem;
-}
-
-.popup.active .popup-content {
-    transform: translateY(0);
+    transform: translate(-50%, -50%);
 }
 
 .popup-content .title {
