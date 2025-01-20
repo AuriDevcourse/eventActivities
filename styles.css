@@ -10,7 +10,7 @@ body {
     margin: 0;
     padding: 0;
     color: #333;
-    background-color: #111111;
+    background-color: transparent;
     min-height: 100vh;
     padding: 2rem;
 }
@@ -217,7 +217,7 @@ h3.title.overflow {
     z-index: 1000;
     opacity: 0;
     visibility: hidden;
-    transition: all 0.3s ease;
+    transition: opacity 0.3s ease;
 }
 
 .popup.active {
@@ -230,11 +230,28 @@ h3.title.overflow {
     border-radius: 20px;
     border: 1px solid rgba(242, 242, 242, 0.5);
     padding: 2rem;
-    max-width: 800px;
-    width: 90%;
+    width: min(90vw, 800px);
+    max-height: 90vh;
     position: relative;
+    overflow-y: auto;
     transform: translateY(20px);
-    transition: all 0.3s ease;
+    transition: transform 0.3s ease;
+}
+
+.popup-content .title {
+    text-align: left;
+    justify-content: flex-start;
+    margin-bottom: 1rem;
+}
+
+.popup-content a {
+    text-decoration: underline;
+    transition: opacity 0.3s ease;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.popup-content a:hover {
+    opacity: 0.7;
 }
 
 .popup.active .popup-content {
@@ -386,7 +403,7 @@ p {
 
 @media screen and (max-width: 768px) {
     body {
-        padding: 0;
+        padding: 5 0 15 0px;
     }
 
     .container {
