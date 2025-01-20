@@ -1,4 +1,4 @@
-* {
+body* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -403,62 +403,70 @@ p {
 
 @media screen and (max-width: 768px) {
     body {
-        padding: 5 0 15 0px;
+        padding: 5px 15px;
     }
 
     .container {
         padding-left: 5px;
         padding-right: 5px;
+        width: 100%;
     }
 
     .grid,
     .grid-3-columns {
         grid-template-columns: 1fr;
         gap: 10px;
+        width: 100%;
     }
 
     .card {
+        height: 200px;
+        padding: 1rem;
         width: 100%;
-        max-width: 100%;
-        margin: 0;
-        padding: 0;
+        margin: 0 auto;
+    }
+
+    .card-image {
+        height: 120px;
     }
 
     .card-image .material-symbols-outlined {
-        font-size: 4rem;
-    }
-
-    .card .title {
-        white-space: normal;
-        overflow: visible;
-    }
-}
-
-@media (max-width: 768px) {
-    .popup-content {
-        width: 95%;
-        padding: 1.5rem;
-        margin: 1rem;
-    }
-
-    .popup-image {
-        height: 200px;
+        font-size: 6rem;
     }
 
     .title {
-        font-size: 20px;
-        min-height: 50px;
+        font-size: 16px;
+        min-height: 40px;
+        line-height: 1.2;
+        padding: 0 5px;
+    }
+
+    .general-headline {
+        font-size: 32px;
+        line-height: 1.2;
+        margin-bottom: 20px;
+        padding: 0 10px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .card {
+        min-height: 200px;
+        max-width: 100%;
+    }
+
+    .popup-content {
+        width: 95vw;
+        padding: 1rem;
     }
 
     .popup-description {
         font-size: 14px;
-        margin: 1rem 0;
     }
 
-    .neon-button {
-        width: 100%;
-        text-align: center;
-        padding: 1rem;
+    .popup-content .title {
+        font-size: 20px;
+        line-height: 1.2;
     }
 }
 
@@ -483,7 +491,7 @@ p {
 @media (max-width: 480px) {
     .card {
         height: auto;
-        min-height: 350px;
+        min-height: 200px;
     }
 
     .popup-content {
