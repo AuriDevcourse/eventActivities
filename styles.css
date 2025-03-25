@@ -190,9 +190,8 @@ h3.title.overflow {
     border: 1px solid rgba(242, 242, 242, 0.5);
     padding: 2rem;
     width: min(90vw, 800px);
-    max-height: 80vh;
+    max-height: 90vh;
     position: absolute;
-    overflow-y: auto;
     transition: transform 0.3s ease;
     transform: translate(-50%, -50%);
 }
@@ -481,5 +480,25 @@ p {
     .general-headline {
         font-size: 36px;
         line-height: 43px;
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    .popup-content {
+        overflow: auto;
+        scrollbar-width: none; /* Firefox */
+        -ms-overflow-style: none; /* IE and Edge */
+        max-height: 85vh;
+    }
+    
+    .popup-content::-webkit-scrollbar {
+        display: none; /* Chrome, Safari and Opera */
+    }
+}
+
+@media screen and (max-width: 1023px) {
+    .popup-content {
+        overflow-y: auto;
+        max-height: 90vh;
     }
 }

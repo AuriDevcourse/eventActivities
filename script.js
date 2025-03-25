@@ -25,31 +25,52 @@ document.querySelectorAll('.card[data-popup]').forEach(card => {
             const viewportWidth = window.innerWidth;
             const viewportHeight = window.innerHeight;
             
+            // Check if we're on mobile/tablet (viewport width less than 1024px)
+            const isMobileOrTablet = viewportWidth < 1024;
+            
             // Calculate positions
             let finalX = x;
             let finalY = y;
             let transform = 'translate(-50%, -50%)';
             
-            // Check horizontal boundaries
-            if (x + (popupRect.width / 2) > viewportWidth) {
-                // Too far right
-                finalX = viewportWidth - 20;
-                transform = 'translate(-100%, -50%)';
-            } else if (x - (popupRect.width / 2) < 0) {
-                // Too far left
-                finalX = 20;
-                transform = 'translate(0, -50%)';
-            }
-            
-            // Check vertical boundaries
-            if (y + (popupRect.height / 2) > viewportHeight) {
-                // Too far down
-                finalY = viewportHeight - 20;
-                transform = transform.replace('-50%)', '-100%)');
-            } else if (y - (popupRect.height / 2) < 0) {
-                // Too far up
-                finalY = 20;
-                transform = transform.replace('-50%)', '0)');
+            if (isMobileOrTablet) {
+                // On mobile/tablet: always center horizontally
+                finalX = viewportWidth / 2;
+                transform = 'translate(-50%, -50%)';
+                
+                // Adjust vertical position to stay within bounds
+                if (y + (popupRect.height / 2) > viewportHeight) {
+                    // Too far down
+                    finalY = viewportHeight - 20;
+                    transform = 'translate(-50%, -100%)';
+                } else if (y - (popupRect.height / 2) < 0) {
+                    // Too far up
+                    finalY = 20;
+                    transform = 'translate(-50%, 0)';
+                }
+            } else {
+                // Desktop behavior
+                // Check horizontal boundaries
+                if (x + (popupRect.width / 2) > viewportWidth) {
+                    // Too far right
+                    finalX = viewportWidth - 20;
+                    transform = 'translate(-100%, -50%)';
+                } else if (x - (popupRect.width / 2) < 0) {
+                    // Too far left
+                    finalX = 20;
+                    transform = 'translate(0, -50%)';
+                }
+                
+                // Check vertical boundaries
+                if (y + (popupRect.height / 2) > viewportHeight) {
+                    // Too far down
+                    finalY = viewportHeight - 20;
+                    transform = transform.replace('-50%)', '-100%)');
+                } else if (y - (popupRect.height / 2) < 0) {
+                    // Too far up
+                    finalY = 20;
+                    transform = transform.replace('-50%)', '0)');
+                }
             }
             
             // Apply final position
