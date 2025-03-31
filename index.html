@@ -818,14 +818,19 @@
     <script src="script.js"></script>
 
     <script>
-        function sendHeight() {
-          parent.postMessage({
-            iframeHeight: document.documentElement.scrollHeight
-          }, "*");
-        }
+        const sendHeight = () => {
+          const height = document.documentElement.scrollHeight;
+          parent.postMessage({ iframeHeight: height }, "*");
+        };
       
-        window.addEventListener("load", sendHeight);
-        window.addEventListener("resize", sendHeight);
+        // Send once after load
+        window.addEventListener("load", () => {
+          setTimeout(sendHeight, 300); // allow images/layout to load
+        });
+      
+        // Update if the size changes dynamically
+        const observer = new ResizeObserver(sendHeight);
+        observer.observe(document.body);
       </script>
       
 </body>
