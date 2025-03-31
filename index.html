@@ -816,22 +816,32 @@
     </div>
 
     <script src="script.js"></script>
-
+    <!-- other scripts if any -->
+  
     <script>
-        const sendHeight = () => {
-          const height = document.documentElement.scrollHeight;
-          parent.postMessage({ iframeHeight: height }, "*");
-        };
-      
-        // Send once after load
+        let lastHeight = 0;
+    
+        function sendHeight() {
+          // Clamp max height to 5000px (adjust this number if needed)
+          let newHeight = Math.min(document.body.scrollHeight, 5000);
+    
+          if (Math.abs(newHeight - lastHeight) > 5) {
+            lastHeight = newHeight;
+            parent.postMessage({ iframeHeight: newHeight }, "*");
+          }
+        }
+    
         window.addEventListener("load", () => {
-          setTimeout(sendHeight, 300); // allow images/layout to load
+          setTimeout(sendHeight, 300); // delay allows layout/images to load
         });
-      
-        // Update if the size changes dynamically
-        const observer = new ResizeObserver(sendHeight);
+    
+        const observer = new ResizeObserver(() => {
+          sendHeight();
+        });
+    
         observer.observe(document.body);
       </script>
-      
-</body>
-</html>
+    
+    </body>
+    </html>
+    
