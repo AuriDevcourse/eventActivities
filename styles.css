@@ -47,6 +47,13 @@ body {
     width: 250px;
 }
 
+.card-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    width: 250px;
+}
+
 .grid-3-columns {
     display: flex;
     flex-wrap: wrap;
