@@ -24,6 +24,7 @@ body {
     margin-bottom: 40px;
     background: linear-gradient(135deg, #FFA155 33%, #FF0028 48%);
     -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
     border-bottom: none;
 }
@@ -34,12 +35,24 @@ body {
     padding: 20px;
 }
 
-.grid,
-.grid-3-columns {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+.grid {
+    display: flex;
+    flex-wrap: wrap;
     gap: 2rem;
     padding: 1rem;
+    justify-content: center;
+}
+
+.grid .card {
+    width: 250px;
+}
+
+.grid-3-columns {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    padding: 1rem;
+    justify-content: center;
 }
 
 .card {
@@ -56,6 +69,10 @@ body {
     overflow: hidden;
     min-height: 200px;
     position: relative;
+}
+
+.grid-3-columns .card {
+    width: 250px;
 }
 
 .card:hover {
@@ -79,7 +96,7 @@ body {
     align-items: center !important;
     width: 100% !important;
     height: 100% !important;
-    color: white !important;
+    color: #FF0028 !important;
     opacity: 0.8 !important;
     text-align: center !important;
     position: absolute !important;
@@ -95,11 +112,36 @@ body {
     height: 100%;
     object-fit: cover;
     transition: transform 0.3s ease;
+}
+
+.brella-image {
+    width: 80% !important;
+    height: auto !important;
+    object-fit: contain !important;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-height: 80%;
     display: block;
 }
 
-.card:hover .card-image img {
+.popup-brella-image {
+    width: auto;
+    height: auto;
+    max-width: 80%;
+    max-height: 150px;
+    margin: 0 auto;
+    display: block;
+    object-fit: contain;
+}
+
+.card:hover .card-image img:not(.brella-image) {
     transform: scale(1.05);
+}
+
+.card:hover .brella-image {
+    transform: translate(-50%, -50%); /* Keep the same transform to maintain position */
 }
 
 .title {
@@ -256,6 +298,48 @@ h3.title.overflow {
     font-size: 0.9em;
     line-height: 1.2em;
     margin: 1.5rem 0;
+}
+
+/* Opening Hours Side by Side Layout */
+.opening-hours-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem;
+    color: rgba(255, 255, 255, 0.9);
+    font-family: 'Inter', sans-serif;
+    margin: 1.5rem 0;
+}
+
+.day-column {
+    flex: 1;
+}
+
+.day-title {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 1em;
+    margin-bottom: 1rem;
+    color: white;
+}
+
+.schedule-list {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.schedule-list li {
+    margin-bottom: 0.5rem;
+    position: relative;
+    padding-left: 1.2rem;
+    font-size: 0.9em;
+    line-height: 1.2em;
+}
+
+.schedule-list li:before {
+    content: "-";
+    position: absolute;
+    left: 0;
+    color: rgba(255, 255, 255, 0.7);
 }
 
 .popup-button {
@@ -445,6 +529,11 @@ p {
         padding: 1rem;
         width: 95%;
         margin: 0 auto;
+    }
+    
+    .opening-hours-container {
+        flex-direction: column;
+        gap: 1.5rem;
     }
 
     .popup-image {
